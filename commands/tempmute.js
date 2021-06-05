@@ -16,7 +16,7 @@ module.exports = {
         let muteReason = args.slice(2).join(' ');
         if(!muteReason) muteReason = "Not Specified."
 
-        if(!mutemember || !args[1]){
+        if(!mutemember || !ms(args[1])){
             const missingArgs = new MessageEmbed()
                 .setColor("RED")
                 .setTitle("Missing arguments")
@@ -85,7 +85,7 @@ module.exports = {
             message.channel.send(embed);
 
             setTimeout(() => {
-                mutemember.roles.remove(muteRole);
+                mutemember.roles.remove(muteRole).catch(err => null)
 
                 const mute = new MessageEmbed()
                     .setColor("BLUE")
@@ -123,12 +123,13 @@ module.exports = {
             message.channel.send(embed);
 
             setTimeout(() => {
-                mutemember.roles.remove(muteRole);
+
+                mutemember.roles.remove(muteRole).catch(err => null);
 
                 const mute = new MessageEmbed()
-                .setColor("BLUE")
-                .setDescription(`**You have been __unmuted__ in \`${message.guild.name}\` for \`${muteReason}\`!**`)
-                mutemember.send(mute).catch(err => {console.log(err)});
+                    .setColor("BLUE")
+                    .setDescription(`**You have been __unmuted__ in \`${message.guild.name}\` for \`${muteReason}\`!**`)
+                mutemember.send(mute).catch(err => null);
 
                 let unmute = new MessageEmbed()
                     .setTitle("Member Unmuted")
