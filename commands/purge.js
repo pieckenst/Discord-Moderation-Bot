@@ -32,12 +32,12 @@ module.exports = {
             const succes = new MessageEmbed()
                 .setColor("GREEN")
                 .setDescription(`**Succesfully deleted** \`${messages.size}\` **messages.**`)
-            return messages.channel.send(succes).then(msg => msg.delete({ timeout: 5000 })).catch(err => null);
+            return message.channel.send(succes).then(msg => msg.delete({ timeout: 5000 })).catch(err => null);
         }).catch(error => {
             const err = new MessageEmbed()
                 .setColor("RED")
                 .setDescription(`**Unable to delete messages older than 2 weeks.**`)
-            return messages.channel.send(err ).then(msg => msg.delete({ timeout: 5000 })).catch(err => null);
+            return message.channel.send(err ).then(msg => msg.delete({ timeout: 5000 })).catch(err => null);
         });
     }
 }
