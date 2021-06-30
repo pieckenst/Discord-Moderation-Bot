@@ -1,15 +1,15 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
-    config: {
-        name: 'nuke',
-        description: 'Delete all the messages in a channel."',
-        category: 'moderator',
-        aliases: [""],
-        usage: '',
-        permissions: ["MANAGE_CHANNELS"],
-    },
-    async run(client, message, args){
+
+ name: 'recreatechannel',
+ description: 'Deletes the channel and all messages in it and then recreates it with empty contents."',
+ category: 'moderator',
+ aliases: [""],
+ usage: '',
+ permissions: ["MANAGE_CHANNELS"],
+
+    async execute(client, message, args) {
         let channel = client.channels.cache.get(message.channel.id);
         const position = channel.position;
         const topic = channel.topic;
@@ -20,9 +20,9 @@ module.exports = {
         channel2.setTopic(topic);
         channel.delete();
 
-        const nuke = new MessageEmbed()
+        const infocomplete = new MessageEmbed()
             .setColor("BLUE")
-            .setDescription(":boom: **Channel Has Been Nuked!**")
-        return channel2.send(nuke);
+            .setDescription("```The channel has been cleared of contents```")
+        return channel2.send(infocomplete);
     }
 }
