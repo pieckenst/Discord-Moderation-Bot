@@ -2,25 +2,31 @@ const { MessageEmbed } = require('discord.js');
 const config = require('../config.json');
 
 module.exports = {
-    config: {
-        name: 'mute',
-        description: 'Permanently mute a person.',
-        aliases: ["permmute"],
-        usage: '<@user/ID> [Reason]',
-        permissions: ["MANAGE_ROLES"],
-    },
-    async run(client, message, args){
+ name: 'pmute',
+ description: 'Permanently mute a person.',
+ aliases: ["permmute"],
+ usage: '<@user/ID> [Reason]',
+ permissions: ["MANAGE_ROLES"],
+      async execute(client, message, args) {
         const mutemember = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         let muteReason = args.slice(1).join(' ');
         if(!muteReason) muteReason = "Not Specified."
 
         if(!mutemember){
             const missingArgs = new MessageEmbed()
-                .setColor("RED")
-                .setTitle("Missing arguments")
-                .setDescription(`**Command:** \`${this.config.name}\`\n**Description:** \`${this.config.description || "None"}\`\n**Aliases:** \`${this.config.aliases.join(", ") || "None"}\`\n**Usage:** \`${config.prefix}${this.config.name}${this.config.usage}\`\n**Permissions:**\`${this.config.permissions || "None"}\``)
-                .setTimestamp()
-            return message.channel.send(missingArgs);
+              .setColor("RED")
+              .setTitle("Missing arguments")
+              .setDescription(
+                `**Command:** \`${this.name}\`\n**Description:** \`${
+                this.description || "None"
+                }\`\n**Aliases:** \`${
+                this.aliases.join(", ") || "None"
+                }\`\n**Usage:** \`${config.prefix}${this.name}${
+                this.usage
+               }\`\n**Permissions:**\`${this.permissions || "None"}\``
+            )
+            .setTimestamp();
+           return message.channel.send(missingArgs);
         }
         if(mutemember == message.member){
             const err = new MessageEmbed()
